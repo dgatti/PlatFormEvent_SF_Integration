@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="set-request-sapi-headers-client-id-client-secret1" doc:id="27a28401-e944-4230-9eb2-0b1a25cae654">
+		<set-variable value="#[%dw 2.0&#10;&#10;output json&#10;---&#10;{&#10;	&quot;client_secret&quot; : Mule::p('secure::app.sfcore.api.credentials.client_secret'),&#10;	&quot;client_id&quot; : Mule::p('secure::app.sfcore.api.credentials.client_id')&#10;}]" doc:name="Set Headers" doc:id="79882035-e997-4902-807d-61c2f6c9e312" variableName="requestSapiHeaders" />
+	</sub-flow>
+	<flow name="request-post-s3document-sfcore-sapi-flow" doc:id="63a03b10-85d8-4048-83b4-0f57504305b1" >
+		<flow-ref doc:name="set-request-sapi-headers-client-id-client-secret" doc:id="ed734628-7a49-4293-a62b-877c5593ab45" name="set-request-sapi-headers-client-id-client-secret" />
+		<http:request method="POST" doc:name="request-s3document-event-sfcore-sapi" doc:id="6e157f3b-a20e-43c2-9b7c-84c3a7ddf823" config-ref="httpRequestSFCoreSapiConfig" path="${app.sfcore.api.methods.s3_document}" outputEncoding="UTF-8" responseTimeout="10000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+vars.requestSapiHeaders]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="get-request-schema-master-sfcore-sapi-flow" doc:id="60a0c51a-2093-4599-9fa7-a9e8b1ba5264" >
+		<flow-ref doc:name="set-request-sapi-headers-client-id-client-secret" doc:id="1b07c2e1-fa9e-4ede-a31f-c63d030e2913" name="set-request-sapi-headers-client-id-client-secret" />
+		<http:request method="GET" doc:name="get-request-schema-master-event-sfcore-sapi" doc:id="f78bf221-fc78-481d-9509-eac295706c51" config-ref="httpRequestSFCoreSapiConfig" path="${app.sfcore.api.methods.schema_master}" outputEncoding="UTF-8" responseTimeout="10000">
+			<http:headers ><![CDATA[#[output application/java
+---
+vars.requestSapiHeaders]]]></http:headers>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"versionNumber" : vars.versionNumber
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="get-request-content-document-link-sfcore-sapi-flow" doc:id="86087efa-42fb-48b7-a25e-1827407e4d21" >
+		<flow-ref doc:name="set-request-sapi-headers-client-id-client-secret" doc:id="cc95d531-dd30-4530-afe9-501a0fb0c0cf" name="set-request-sapi-headers-client-id-client-secret" />
+		<http:request method="GET" doc:name="get-requestcontent-document-link-event-sfcore-sapi" doc:id="bb0c4616-ef01-42f4-b313-a3a21d444714" config-ref="httpRequestSFCoreSapiConfig" path="${app.sfcore.api.methods.content_document_link}" outputEncoding="UTF-8" responseTimeout="10000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+vars.requestSapiHeaders]]]></http:headers>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"linkedEntityId" : vars.linkedEntityId
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="get-request-content-version-sapi-flow" doc:id="7a5b0ebf-33d7-42e0-8771-8dd883ef182e" >
+		<flow-ref doc:name="set-request-sapi-headers-client-id-client-secret" doc:id="59b9758d-e027-4afa-a4aa-dfb10f509dbc" name="set-request-sapi-headers-client-id-client-secret" />
+		<http:request method="GET" doc:name="get-request-content-version-event-sfcore-sapi" doc:id="6ccc5e83-360b-48d7-808d-df30972fec98" config-ref="httpRequestSFCoreSapiConfig" path="${app.sfcore.api.methods.content_version}" outputEncoding="UTF-8" responseTimeout="10000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+vars.requestSapiHeaders]]]></http:headers>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"contentBodyId" : vars.contentBodyId
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="request-post-log-sfcore-sapi-flow" doc:id="3b1c4c72-9e3b-4900-9f33-61385640f93c" >
+		<flow-ref doc:name="set-request-sapi-headers-client-id-client-secret" doc:id="552dad17-dc87-4541-81fc-87e1ec645f87" name="set-request-sapi-headers-client-id-client-secret" />
+		<http:request method="POST" doc:name="request-log-event-sfcore-sapi" doc:id="d5ba6f6f-4952-485d-81b1-76c811bd5e72" config-ref="httpRequestSFCoreSapiConfig" path="${app.sfcore.api.methods.log}" outputEncoding="UTF-8" responseTimeout="10000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+vars.requestSapiHeaders]]]></http:headers>
+		</http:request>
+	</flow>
+	<flow name="request-post-logentry-sfcore-sapi-flow" doc:id="717f8fc6-74df-4ee3-8f5d-7d6c440f76b3" >
+		<flow-ref doc:name="set-request-sapi-headers-client-id-client-secret" doc:id="0b84fec1-0258-4dcb-bfbc-57560d8459de" name="set-request-sapi-headers-client-id-client-secret" />
+		<http:request method="POST" doc:name="request-logentry-event-sfcore-sapi" doc:id="8ff33e76-2d6e-4c84-a9cf-5d590512cf9f" config-ref="httpRequestSFCoreSapiConfig" path="${app.sfcore.api.methods.log_entry}" outputEncoding="UTF-8" responseTimeout="10000" >
+			<http:headers ><![CDATA[#[output application/java
+---
+vars.requestSapiHeaders]]]></http:headers>
+		</http:request>
+	</flow>
+</mule>

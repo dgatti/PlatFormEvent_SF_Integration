@@ -1,0 +1,17 @@
+https:
+  keyPass: "![LMwU9lU49ETVhX81ziCo4w==]"
+
+app:
+  salesforce:
+    cloud:
+      auth:
+        username: "![EikoThIsIcs2HD7u7ePh2qxtHxU7dm+iCOQzN23VcTso506ib57EAQ==]"
+        password: "![k9/vDqF8x10bDUN2qbINeg==]"
+        consumerKey: "![y51djiH6fl6rhF+fGCXJ7PNZ14+8SsSVwRI2BDg8nrbD1Edmztsv+CiIDTNz5oJSq+1aw3/UMwa1kc5e7zFIBhxnB1zwtrKVs1l/kzSsJbLcYMkOAzlpLA==]"
+        consumerSecret: "![2QYvjKcrYeNmr1DOeK41OTPgQaEdF/YnAv4kzoF+IIXCQ2h/2nfsXOsYQc7eHrDCxC81TCaj0JZbFa8UofSoyCMbc4tfKKIA]"
+        certPassword: "![wy5qlE5XYBrKAXNkIjyTRw==]"
+        
+  sapi:
+    credentials:
+      clientId: "![R4JlXwbQDn1tNeuUB9t/y9YYyRdKOikOoxTyyRVOFRT1MzLu0rfp6g==]"
+      clientSecret: "![rR5HLA+StUW2H7ZAsyS26M5pY2JOX4pMRVifWfunsd7qxgZagcWtLg==]"
